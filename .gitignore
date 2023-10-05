@@ -19,3 +19,6 @@
 
 # Go workspace file
 go.work
+
+# JS stuff
+node_modules/
