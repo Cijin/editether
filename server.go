@@ -1,12 +1,15 @@
 package main
 
 import (
+	"editether/database"
 	"html/template"
 	"io"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
+
+const PORT = ":8080"
 
 type Template struct {
 	templates *template.Template
@@ -21,6 +24,8 @@ func main() {
 		templates: template.Must(template.ParseGlob("public/views/*.html")),
 	}
 
+	database.InitDb("./editether.db")
+
 	e := echo.New()
 	e.Static("/static", "public")
 	e.Renderer = t
@@ -29,5 +34,5 @@ func main() {
 		return c.Render(http.StatusOK, "index", nil)
 	})
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(PORT))
 }
